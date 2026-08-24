@@ -28,8 +28,15 @@ return [
     |
     */
 
+    
+
     'disks' => [
 
+        'movies' => [
+        'driver' => 'local',
+        'root' => storage_path('app/movies'),
+        ],
+        
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app/private'),

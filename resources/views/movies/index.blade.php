@@ -1,3 +1,4 @@
+{{-- resources/views/movies/index.blade.php --}}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +10,10 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -153,7 +157,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #323838;
+            background: #f7f7f7;
             border-bottom: 1px solid #e4e4e4;
         }
 
@@ -162,7 +166,7 @@
             font-size: 38px;
             font-weight: 700;
             letter-spacing: 4px;
-            color: #ffffff;
+            color: #222;
         }
 
         .content {
@@ -245,7 +249,7 @@
             opacity: 1;
         }
 
-        .show-button {
+        .edit-button {
             width: 100%;
             display: flex;
             justify-content: center;
@@ -260,7 +264,7 @@
             text-decoration: none;
         }
 
-        .show-button:hover {
+        .edit-button:hover {
             background: #fff;
         }
 
@@ -296,7 +300,7 @@
             color: #888;
         }
 
-        .movies {
+        .actions {
             margin-top: 13px;
             display: flex;
             justify-content: center;
@@ -305,7 +309,7 @@
             transition: opacity .2s ease;
         }
 
-        .movie-card:hover .movies {
+        .movie-card:hover .actions {
             opacity: 1;
         }
 
@@ -462,6 +466,10 @@
     <header class="topbar">
         <div class="topbar-inner">
 
+            <div class="logo">
+                digital<span>ia</span>
+            </div>
+
             <button class="menu-button" type="button" aria-label="Menu">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" />
@@ -469,7 +477,11 @@
             </button>
 
             <div class="search-area">
-                <input type="text" class="search-box" placeholder="Search">
+
+                <input
+                    type="text"
+                    class="search-box"
+                    placeholder="Search">
 
                 <button class="search-button" type="button" aria-label="Search">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -477,16 +489,19 @@
                         <path d="m20 20-4-4" stroke-linecap="round" />
                     </svg>
                 </button>
-            </div>
 
-            <a
-                href="#"
-                class="add-movie" style="margin: 0 8px; padding: 9px 15px">
-                Add Movie
-            </a>
+                <a
+                    href="{{ route('movies.create') }}"
+                    class="add-movie"
+                    style="padding: 9px 15px; margin: 0 8px;">
+                    Add Movie
+                </a>
+
+            </div>
 
             <nav class="top-links">
                 <span class="separator">|</span>
+
                 <a href="#">Login</a>
             </nav>
 
@@ -504,6 +519,7 @@
     <main class="content">
 
         @if ($movies->isEmpty())
+
         <div class="empty-state">
 
             <svg
@@ -523,41 +539,78 @@
             </p>
 
             <a
-                href="#"
+                href="{{ route('movies.create') }}"
                 class="add-movie">
                 Add Movie
             </a>
 
         </div>
+
         @else
+
         <section class="section">
 
             <div class="section-heading">
+
                 <h2>Movies</h2>
+
                 <div class="section-line"></div>
+
             </div>
 
 
             <div class="movies-grid">
 
-            @foreach ($movies as $movie)
+                @foreach ($movies as $movie)
+
                 <article class="movie-card">
+
                     <div class="poster-wrapper">
 
                         @if ($movie->image)
-                        <img src="{{ asset('movies/' . $movie->image) }}" alt="{{ $movie->title }}" loading="lazy">
+
+                        <img
+                            src="{{ asset('storage/' . $movie->image) }}"
+                            alt="{{ $movie->title }}"
+                            loading="lazy">
+
                         @else
-                        <div style=" width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:#aaa; font-size:12px;">
+
+                        <div
+                            style="
+                                            width:100%;
+                                            height:100%;
+                                            display:flex;
+                                            align-items:center;
+                                            justify-content:center;
+                                            color:#aaa;
+                                            font-size:12px;
+                                        ">
                             No Poster
                         </div>
+
                         @endif
+
+                        <div class="movie-overlay">
+
+                            <a
+                                href="{{ route('movies.show', $movie) }}"
+                                class="edit-button">
+                                Show Movie
+                            </a>
+
+                        </div>
+
                     </div>
+
 
                     <div class="movie-title">
                         {{ $movie->title }}
                     </div>
 
+
                     <div class="movie-meta">
+
                         <span>
                             {{ $movie->release_year }}
                         </span>
@@ -565,34 +618,54 @@
                         <span>•</span>
 
                         <span class="rating">
-                            <svg viewBox="0 0 20 20" fill="currentColor">
+
+                            <svg
+                                viewBox="0 0 20 20"
+                                fill="currentColor">
                                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.958a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.447a1 1 0 00-.363 1.118l1.287 3.957c.3.922-.755 1.688-1.538 1.118l-3.367-2.446a1 1 0 00-1.176 0l-3.367 2.446c-.783.57-1.838-.196-1.538-1.118l1.287-3.957a1 1 0 00-.363-1.118L2.062 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69l1.287-3.958z" />
                             </svg>
+
                             {{ $movie->rating !== null ? number_format((float) $movie->rating, 1) : '—' }}
+
                         </span>
 
                     </div>
 
-                    <div class="movies">
-                        <a href="#"> Edit </a>
 
-                        <form action="{{ route('movies.destroy', $movie) }}" method="POST" onsubmit="return confirm('Delete this movie? This action cannot be undone.');">
+                    <div class="actions">
+
+                        <a
+                            href="{{ route('movies.edit', $movie) }}"
+                            class="action-button">
+                            Edit
+                        </a>
+
+                        <form
+                            action="{{ route('movies.destroy', $movie) }}"
+                            method="POST"
+                            onsubmit="return confirm('Delete this movie? This action cannot be undone.');">
+
                             @csrf
                             @method('DELETE')
+
                             <button
                                 type="submit"
                                 class="action-button delete-button">
                                 Delete
                             </button>
+
                         </form>
 
                     </div>
+
                 </article>
 
-            @endforeach
+                @endforeach
 
             </div>
+
         </section>
+
         @endif
 
     </main>
