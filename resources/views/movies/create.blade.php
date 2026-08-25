@@ -506,7 +506,7 @@
         <div class="topbar-inner">
 
             <div class="logo">
-                digital<span>ia</span>
+                movie<span>Repo</span>
             </div>
 
             <button

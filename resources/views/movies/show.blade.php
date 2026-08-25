@@ -433,7 +433,7 @@
         <div class="topbar-inner">
 
             <div class="logo">
-                digital<span>ia</span>
+                movie<span>Repo</span>
             </div>
 
             <button class="menu-button" type="button" aria-label="Menu">
