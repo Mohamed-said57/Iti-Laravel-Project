@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ChatbotController;
 use App\Http\Controllers\MovieController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
@@ -15,4 +16,5 @@ Route::get('/movies/{movie}/edit', [MovieController::class, 'edit'])->name('movi
 Route::put('/movies/{movie}', [MovieController::class, 'update'])->name('movies.update');
 Route::delete('/movies/{movie}', [MovieController::class, 'destroy'])->name('movies.destroy');
 
-Route::get('/movies/{movie}/image', [MovieController::class, 'image'])->name('movies.image');
+Route::get('/chatbot', [ChatbotController::class, 'index'])->name('chatbot.index');
+Route::post('/chatbot', [ChatbotController::class, 'chat'])->name('chatbot.chat')->middleware('throttle:10,1');

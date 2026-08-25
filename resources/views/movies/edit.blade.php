@@ -461,7 +461,7 @@
         <div class="topbar-inner">
 
             <div class="logo">
-                movie<span>Repo</span>
+                <a href="{{ route('movies.index') }}">movie<span>Repo</span></a>
             </div>
 
             <button
@@ -505,11 +505,11 @@
             </div>
 
             <nav class="top-links">
-
                 <span class="separator">|</span>
-
                 <a href="#">Login</a>
 
+                <span class="separator">|</span>
+                <a href="{{ route('chatbot.chat') }}">AI Chatbot</a>
             </nav>
 
         </div>
