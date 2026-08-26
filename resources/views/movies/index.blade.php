@@ -60,6 +60,13 @@
             color: #777;
         }
 
+        /* --- إضافات القائمة المنسدلة --- */
+        .menu-container {
+            position: relative;
+            display: flex;
+            height: 100%;
+        }
+
         .menu-button {
             width: 60px;
             height: 52px;
@@ -69,13 +76,59 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .menu-button:hover {
+            background: #e4e4e4;
         }
 
         .menu-button svg {
             width: 24px;
             height: 24px;
             color: #555;
+            pointer-events: none;
         }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 52px;
+            /* نفس ارتفاع الـ topbar */
+            left: 0;
+            background-color: #ffffff;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e1e1e1;
+            border-top: none;
+            z-index: 1000;
+            flex-direction: column;
+        }
+
+        .dropdown-menu.show {
+            display: flex;
+        }
+
+        .dropdown-menu a {
+            color: #333;
+            padding: 14px 18px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            border-bottom: 1px solid #f1f1f1;
+            transition: background 0.2s ease;
+        }
+
+        .dropdown-menu a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #f9f9f9;
+            color: #000;
+        }
+
+        /* --------------------------- */
 
         .search-area {
             display: flex;
@@ -470,11 +523,20 @@
                 <a href="{{ route('movies.index') }}">movie<span>Repo</span></a>
             </div>
 
-            <button class="menu-button" type="button" aria-label="Menu">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" />
-                </svg>
-            </button>
+            <!-- حاوية القائمة المنسدلة -->
+            <div class="menu-container">
+                <button class="menu-button" type="button" aria-label="Menu" onclick="toggleMenu()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" />
+                    </svg>
+                </button>
+
+                <!-- الروابط داخل القائمة -->
+                <div class="dropdown-menu" id="myDropdown">
+                    <a href="{{ route('movies.index') }}">Movies</a>
+                    <a href="#">Your Watchlist</a> <!-- قم بتغيير الرابط لاحقاً إلى المسار الخاص بك -->
+                </div>
+            </div>
 
             <div class="search-area">
 
@@ -671,6 +733,26 @@
         @endif
 
     </main>
+
+    <!-- سكربت التحكم في إظهار وإخفاء القائمة -->
+    <script>
+        function toggleMenu() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+
+        // إغلاق القائمة المنسدلة إذا ضغط المستخدم في أي مكان خارجها
+        window.onclick = function(event) {
+            if (!event.target.closest('.menu-container')) {
+                var dropdowns = document.getElementsByClassName("dropdown-menu");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+    </script>
 
 </body>
 
