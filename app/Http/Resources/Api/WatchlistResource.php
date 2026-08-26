@@ -14,6 +14,9 @@ class WatchlistResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'Device ID' => $this->device_id,
+            'Movies' => MovieResource::collection($this->whenLoaded('movies'))
+        ];
     }
 }

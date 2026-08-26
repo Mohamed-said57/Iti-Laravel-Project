@@ -62,6 +62,13 @@
             color: #777;
         }
 
+        /* --- Dropdown Menu Styles --- */
+        .menu-container {
+            position: relative;
+            display: flex;
+            height: 100%;
+        }
+
         .menu-button {
             width: 60px;
             height: 52px;
@@ -71,12 +78,55 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .menu-button:hover {
+            background: #e4e4e4;
         }
 
         .menu-button svg {
             width: 24px;
             height: 24px;
             color: #555;
+            pointer-events: none;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 52px;
+            left: 0;
+            background-color: #ffffff;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e1e1e1;
+            border-top: none;
+            z-index: 1000;
+            flex-direction: column;
+        }
+
+        .dropdown-menu.show {
+            display: flex;
+        }
+
+        .dropdown-menu a {
+            color: #333;
+            padding: 14px 18px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            border-bottom: 1px solid #f1f1f1;
+            transition: background 0.2s ease;
+        }
+
+        .dropdown-menu a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #f9f9f9;
+            color: #000;
         }
 
         .nav-title {
@@ -485,32 +535,65 @@
 
 <body>
 
-    <!-- TOP NAVIGATION -->
+    <!-- NAVBAR -->
     <header class="topbar">
+
         <div class="topbar-inner">
 
             <div class="logo">
                 <a href="{{ route('movies.index') }}">movie<span>Repo</span></a>
             </div>
 
-            <button class="menu-button" type="button" aria-label="Menu">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" />
-                </svg>
-            </button>
+            <!-- Dropdown Container -->
+            <div class="menu-container">
+                <button class="menu-button" type="button" aria-label="Menu" onclick="toggleMenu()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" />
+                    </svg>
+                </button>
 
-            <div class="nav-title">
-                AI Assistant
+                <!-- Dropdown Links -->
+                <div class="dropdown-menu" id="myDropdown">
+                    <a href="{{ route('movies.index') }}">Movies</a>
+                    <a href="#">Your Watchlist</a>
+                </div>
+            </div>
+
+            <div class="search-area">
+
+                <input
+                    type="text"
+                    class="search-box"
+                    placeholder="Search">
+
+                <button
+                    type="button"
+                    class="search-button"
+                    aria-label="Search">
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2">
+                        <circle cx="11" cy="11" r="7" />
+                        <path
+                            d="m20 20-4-4"
+                            stroke-linecap="round" />
+                    </svg>
+                </button>
+
             </div>
 
             <nav class="top-links">
                 <span class="separator">|</span>
-                <a href="{{ route('movies.index') }}">Movies</a>
-                <span class="separator">|</span>
                 <a href="#">Login</a>
+
+                <span class="separator">|</span>
+                <a href="{{ route('chatbot.chat') }}">AI Chatbot</a>
             </nav>
 
         </div>
+
     </header>
 
     <!-- CHAT PAGE -->
@@ -765,6 +848,24 @@
             const div = document.createElement('div');
             div.textContent = text;
             return div.innerHTML;
+        }
+
+
+        function toggleMenu() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function(event) {
+            if (!event.target.closest('.menu-container')) {
+                var dropdowns = document.getElementsByClassName("dropdown-menu");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
         }
     </script>
 
