@@ -502,7 +502,7 @@
             <nav class="top-links">
                 <span class="separator">|</span>
                 <a href="#">Login</a>
-                
+
                 <span class="separator">|</span>
                 <a href="{{ route('chatbot.chat') }}">AI Chatbot</a>
             </nav>
@@ -572,7 +572,7 @@
                         @if ($movie->image)
 
                         <img
-                            src="{{ asset('storage/' . $movie->image) }}"
+                            src="{{ asset('images/' . $movie->image) }}"
                             alt="{{ $movie->title }}"
                             loading="lazy">
 

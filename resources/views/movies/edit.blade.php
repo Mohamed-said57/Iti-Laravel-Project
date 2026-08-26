@@ -568,8 +568,9 @@
                     @if ($movie->image)
 
                     <img
-                        src="{{ asset('storage/' . $movie->image) }}"
-                        alt="Poster for {{ $movie->title }}">
+                        src="{{ asset('images/' . $movie->image) }}"
+                        alt="{{ $movie->title }}"
+                        loading="lazy">
 
                     @else
 
