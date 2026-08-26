@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\MovieController;
+use App\Http\Controllers\Api\WatchlistController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -11,3 +12,5 @@ Route::get('/user', function (Request $request) {
 
 Route::get('/movies', [MovieController::class, 'index'])->name('api.movies.index');
 Route::get('/movies/{movie}', [MovieController::class, 'show'])->name('api.movies.show');
+
+Route::post('/watchlists', [WatchlistController::class, 'store'])->name('api.watchlists.store');

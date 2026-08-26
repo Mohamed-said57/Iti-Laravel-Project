@@ -16,7 +16,8 @@ class WatchlistResource extends JsonResource
     {
         return [
             'Device ID' => $this->device_id,
-            'Movies' => MovieResource::collection($this->whenLoaded('movies'))
+            'Movies' => MovieResource::collection($this->whenLoaded('movies')),
+            'Created At' => $this->created_at->toIso8601String(),
         ];
     }
 }
