@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\MovieController;
+use App\Http\Controllers\Api\MovieController ;
 use App\Http\Controllers\Api\WatchlistController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -15,3 +15,7 @@ Route::get('/movies/{movie}', [MovieController::class, 'show'])->name('api.movie
 
 Route::get('/watchlists', [WatchlistController::class, 'index'])->name('api.watchlists.index');
 Route::post('/watchlists', [WatchlistController::class, 'store'])->name('api.watchlists.store');
+Route::delete('/watchlists', [WatchlistController::class, 'destroy'])->name('api.watchlists.destroy');
+
+
+Route::get('/table', [WatchlistController::class, 'table'])->name('api.watchlists.table');
